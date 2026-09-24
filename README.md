@@ -37,6 +37,7 @@ The project will introduce its database, authentication, deployment, and additio
 
 ## Project Structure
 
+```text
 solar-site-monitoring-api/
 ├── app/
 │   ├── resources/
@@ -52,6 +53,9 @@ solar-site-monitoring-api/
 ├── README.md
 ├── requirements-dev.txt
 └── requirements.txt
+```
+
+The application factory in `app/__init__.py` configures the API and registers its resources. The `tests` directory contains the automated test suite.
 
 ***
 
