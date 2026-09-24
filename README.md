@@ -1,6 +1,6 @@
 # Solar Site Monitoring API
 
-Flask REST API for monitoring solar-powered telecommunications sites, with OpenAPI documentation.
+The Solar Site Monitoring API is a Flask-based REST API for managing solar-powered telecommunications sites
 
 The project models a practical monitoring workflow in which teams record site information, solar-panel details, power readings, and operational alerts. It serves as a portfolio reference implementation for backend development and API documentation practices.
 
