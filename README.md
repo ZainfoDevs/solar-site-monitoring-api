@@ -4,7 +4,7 @@ The Solar Site Monitoring API is a Flask-based REST API for managing solar-power
 
 The project models a practical monitoring workflow in which teams record site information, solar-panel details, power readings, and operational alerts. It serves as a portfolio reference implementation for backend development and API documentation practices.
 
-> **Project status:** Early development. The application currently provides a health-check endpoint.
+> **Project status:** Early development. The application currently provides a documented health-check endpoint and an automated endpoint test.
 
 ***
 
@@ -13,9 +13,11 @@ The project models a practical monitoring workflow in which teams record site in
 The API currently provides:
 
 * a Flask application factory
-* a development server
+* Flask-Smorest blueprint-based routing
 * a `GET /health` endpoint
-* a JSON health-check response
+* generated OpenAPI documentation
+* Swagger UI
+* an automated health-endpoint test with pytest
 
 ***
 
@@ -23,24 +25,33 @@ The API currently provides:
 
 * Python
 * Flask
+* Flask-Smorest
+* Marshmallow
+* OpenAPI and Swagger UI
+* pytest
 * Git and GitHub
 
-The project will introduce its database, authentication, validation, testing, documentation, and deployment tools as development continues.
+The project will introduce its database, authentication, deployment, and additional testing tools as development continues.
 
 ***
 
 ## Project Structure
 
-```text
 solar-site-monitoring-api/
 ├── app/
-│   └── __init__.py
+│   ├── resources/
+│   │   ├── __init__.py
+│   │   └── health.py
+│   ├── __init__.py
+│   └── extensions.py
+├── tests/
+│   ├── conftest.py
+│   └── test_health.py
 ├── .gitignore
+├── LICENSE
 ├── README.md
+├── requirements-dev.txt
 └── requirements.txt
-```
-
-The `create_app()` function in `app/__init__.py` creates and configures the Flask application.
 
 ***
 
@@ -93,6 +104,12 @@ Install the project dependencies:
 python -m pip install -r requirements.txt
 ```
 
+To install the runtime dependencies together with development and testing tools, run:
+
+```bash
+python -m pip install -r requirements-dev.txt
+```
+
 ***
 
 ## Run the API
@@ -133,6 +150,18 @@ The health endpoint confirms that the application is running and can respond to 
 
 ***
 
+## Run the Automated Tests
+
+Install the development dependencies, then run:
+
+```bash
+python -m pytest
+```
+
+A successful test run confirms that the health endpoint returns `200 OK` and the expected JSON response.
+
+***
+
 ## Planned Development
 
 The project roadmap includes:
@@ -145,8 +174,7 @@ The project roadmap includes:
 * SQLAlchemy database models
 * database migrations with Alembic and Flask-Migrate
 * JWT authentication and authorization
-* OpenAPI documentation and Swagger UI
-* automated tests
+* expanded automated test coverage
 * Docker support
 * background tasks and email notifications
 * deployment
@@ -160,6 +188,12 @@ Each capability will be added and documented as the API develops.
 This project draws on experience with solar installations at telecommunications sites in South Africa. It explores how an API could support power monitoring, fault management, and operational reporting.
 
 The application uses simulated project data and does not represent or connect to a production telecommunications system.
+
+***
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
 
 ***
 
