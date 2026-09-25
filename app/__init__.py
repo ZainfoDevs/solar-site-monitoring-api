@@ -3,6 +3,7 @@ from flask import Flask
 from app.extensions import api, db, migrate
 from app.models import Site
 from app.resources.health import blp as health_blp
+from app.resources.sites import blp as sites_blp
 
 
 def create_app(test_config=None):
@@ -26,5 +27,6 @@ def create_app(test_config=None):
     migrate.init_app(app, db)
     api.init_app(app)
     api.register_blueprint(health_blp)
+    api.register_blueprint(sites_blp)
 
     return app

@@ -11,10 +11,10 @@ class SiteCreateSchema(Schema):
         metadata={"description": "Operational identifier for the site."},
     )
     name = fields.String(
-    required=True,
-    validate=validate.Length(min=1, max=100),
-    metadata={"description": "Telecommunications site name."},
-   )
+        required=True,
+        validate=validate.Length(min=1, max=100),
+        metadata={"description": "Telecommunications site name."},
+    )
     latitude = fields.Float(
         required=True,
         validate=validate.Range(min=-90, max=90),
