@@ -18,6 +18,7 @@ The API currently provides:
 * generated OpenAPI documentation
 * Swagger UI
 * an automated health-endpoint test with pytest
+* continuous integration with GitHub Actions
 
 ***
 
@@ -29,7 +30,7 @@ The API currently provides:
 * Marshmallow
 * OpenAPI and Swagger UI
 * pytest
-* Git and GitHub
+* Git, GitHub, and GitHub Actions
 
 The project will introduce its database, authentication, deployment, and additional testing tools as development continues.
 
@@ -39,6 +40,9 @@ The project will introduce its database, authentication, deployment, and additio
 
 ```text
 solar-site-monitoring-api/
+├── .github/
+│   └── workflows/
+│       └── tests.yml
 ├── app/
 │   ├── resources/
 │   │   ├── __init__.py
