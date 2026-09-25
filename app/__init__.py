@@ -1,10 +1,11 @@
 from flask import Flask
 
-from app.extensions import api
+from app.extensions import api, db, migrate
+from app.models import Site
 from app.resources.health import blp as health_blp
 
 
-def create_app():
+def create_app(test_config=None):
     app = Flask(__name__)
 
     app.config.update(
@@ -14,8 +15,15 @@ def create_app():
         OPENAPI_URL_PREFIX="/",
         OPENAPI_SWAGGER_UI_PATH="/docs",
         OPENAPI_SWAGGER_UI_URL="https://cdn.jsdelivr.net/npm/swagger-ui-dist/",
+        SQLALCHEMY_DATABASE_URI="sqlite:///solar_monitoring.db",
+        SQLALCHEMY_TRACK_MODIFICATIONS=False,
     )
 
+    if test_config:
+        app.config.update(test_config)
+
+    db.init_app(app)
+    migrate.init_app(app, db)
     api.init_app(app)
     api.register_blueprint(health_blp)
 
