@@ -84,7 +84,7 @@ class SiteDetail(MethodView):
         description="The requested site was not found.",
     )
     def get(self, site_id):
-        """Retrieve a mobile network base station site..
+        """Retrieve a mobile network base station site.
 
         Return the site identified by its database identifier.
         """
@@ -130,7 +130,7 @@ class SiteDetail(MethodView):
         description="The requested site was not found.",
     )
     def delete(self, site_id):
-        """"Delete a mobile network base station site.
+        """Delete a mobile network base station site.
 
         Remove the site identified by its database identifier.
         """

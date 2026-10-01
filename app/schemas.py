@@ -60,6 +60,8 @@ class SiteSchema(SiteCreateSchema):
         dump_only=True,
         metadata={"description": "Date and time when the site was last updated."},
     )
+
+
 class ApiErrorSchema(Schema):
     code = fields.Integer(
         dump_only=True,

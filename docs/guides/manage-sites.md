@@ -90,38 +90,6 @@ If the database does not contain any site records, the API returns an empty list
 ```json
 []
 ```
-## List the Sites
-
-Send a `GET` request to `/sites`:
-
-```bash
-curl http://127.0.0.1:5000/sites
-```
-
-The API returns a `200 OK` response containing the available sites in ascending ID order.
-
-Example response:
-
-```json
-[
-  {
-    "created_at": "2026-09-30T12:00:00.000000",
-    "id": 1,
-    "latitude": -25.7479,
-    "longitude": 28.2293,
-    "name": "Pretoria Central",
-    "site_code": "PTA-CBD-001",
-    "status": "operational",
-    "updated_at": "2026-09-30T12:00:00.000000"
-  }
-]
-```
-
-If the database does not contain any site records, the API returns an empty list:
-
-```json
-[]
-```
 
 ## Retrieve a Site
 
