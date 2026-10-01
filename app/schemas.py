@@ -13,7 +13,7 @@ class SiteCreateSchema(Schema):
     name = fields.String(
         required=True,
         validate=validate.Length(min=1, max=100),
-        metadata={"description": "Telecommunications site name."},
+        metadata={"description": "Mobile network base station name."},
     )
     latitude = fields.Float(
         required=True,
@@ -59,4 +59,23 @@ class SiteSchema(SiteCreateSchema):
     updated_at = fields.DateTime(
         dump_only=True,
         metadata={"description": "Date and time when the site was last updated."},
+    )
+class ApiErrorSchema(Schema):
+    code = fields.Integer(
+        dump_only=True,
+        metadata={"description": "HTTP status code."},
+    )
+    status = fields.String(
+        dump_only=True,
+        metadata={"description": "HTTP status description."},
+    )
+    message = fields.String(
+        dump_only=True,
+        metadata={"description": "Explanation of the error."},
+    )
+    errors = fields.Dict(
+        dump_only=True,
+        metadata={
+            "description": "Validation errors grouped by request location."
+        },
     )

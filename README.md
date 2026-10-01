@@ -2,7 +2,7 @@
 
 [![Tests](https://github.com/ZainfoDevs/solar-site-monitoring-api/actions/workflows/tests.yml/badge.svg)](https://github.com/ZainfoDevs/solar-site-monitoring-api/actions/workflows/tests.yml)
 
-The Solar Site Monitoring API is a Flask-based REST API for managing solar-powered telecommunications sites.
+The Solar Site Monitoring API is a Flask-based REST API for managing solar-powered mobile network base station sites.
 
 The project models a practical monitoring workflow in which teams record site information, solar-panel details, power readings, and operational alerts. It serves as a portfolio reference implementation for backend development and API documentation practices.
 
@@ -24,17 +24,28 @@ The API currently provides:
 
 ***
 
+## Documentation
+
+Start with the [documentation overview](docs/index.md) to explore the project’s concepts, task-based guides, API reference, development information, and architecture decisions.
+
+Use the [Quickstart](docs/quickstart.md) to set up the project, prepare the database, run the API, and send your first request.
+
+After starting the API, open Swagger UI at `http://127.0.0.1:5000/docs` to explore and test the endpoints interactively.
+
+***
+
 ## Technology Stack
 
-* Python
+* Python 3.14
 * Flask
 * Flask-Smorest
 * Marshmallow
-* OpenAPI and Swagger UI
+* SQLite
+* SQLAlchemy and Flask-SQLAlchemy
+* Alembic and Flask-Migrate
+* OpenAPI 3.0 and Swagger UI
 * pytest
 * Git, GitHub, and GitHub Actions
-
-The project will introduce its database, authentication, deployment, and additional testing tools as development continues.
 
 ***
 
@@ -48,12 +59,37 @@ solar-site-monitoring-api/
 ├── app/
 │   ├── resources/
 │   │   ├── __init__.py
-│   │   └── health.py
+│   │   ├── health.py
+│   │   └── sites.py
 │   ├── __init__.py
-│   └── extensions.py
+│   ├── extensions.py
+│   ├── models.py
+│   └── schemas.py
+├── docs/
+│   ├── concepts/
+│   │   └── sites.md
+│   ├── decisions/
+│   │   └── 0001-use-flask-smorest.md
+│   ├── development/
+│   │   └── testing.md
+│   ├── guides/
+│   │   └── manage-sites.md
+│   ├── reference/
+│   │   └── errors.md
+│   ├── index.md
+│   └── quickstart.md
+├── migrations/
+│   ├── versions/
+│   │   └── be46c1c6dc81_create_sites_table.py
+│   ├── README
+│   ├── alembic.ini
+│   ├── env.py
+│   └── script.py.mako
 ├── tests/
 │   ├── conftest.py
-│   └── test_health.py
+│   ├── test_health.py
+│   ├── test_site_schemas.py
+│   └── test_sites.py
 ├── .gitignore
 ├── LICENSE
 ├── README.md
@@ -61,7 +97,7 @@ solar-site-monitoring-api/
 └── requirements.txt
 ```
 
-The application factory in `app/__init__.py` configures the API and registers its resources. The `tests` directory contains the automated test suite.
+The application factory in `app/__init__.py` configures the API and registers its resources. The `app` directory contains the database model, schemas, extensions, and endpoint implementations. The `tests` directory contains the automated test suite, while `docs` contains the project documentation. Alembic stores the database migration history in `migrations`.
 
 ***
 
@@ -69,7 +105,7 @@ The application factory in `app/__init__.py` configures the API and registers it
 
 Before running the project, install:
 
-* Python 3
+* Python 3.14
 * Git
 
 You also need a terminal or command-line application.
@@ -176,7 +212,7 @@ A successful test run confirms that the health endpoint returns `200 OK` and the
 
 The project roadmap includes:
 
-* telecommunications site management
+* mobile network base station site management
 * solar-panel records
 * power-reading collection
 * operational alerts
@@ -195,7 +231,7 @@ Each capability will be added and documented as the API develops.
 
 ## Project Context
 
-This project draws on experience with solar installations at telecommunications sites in South Africa. It explores how an API could support power monitoring, fault management, and operational reporting.
+This project draws on experience with solar installations at mobile network base station sites in South Africa’s telecommunications sector. It explores how an API could support power monitoring, fault management, and operational reporting.
 
 The application uses simulated project data and does not represent or connect to a production telecommunications system.
 
