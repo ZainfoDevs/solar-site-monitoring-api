@@ -166,7 +166,7 @@ You can update the following fields:
 
 The API does not allow clients to change `id`, `site_code`, `created_at`, or `updated_at`.
 
-If the site does not exist, the API returns a `404 Not Found` response. If a supplied value fails validation, it returns a `422 Unprocessable Content` response.
+If the site does not exist, the API returns a `404 Not Found` response. If a supplied value fails validation, it returns a `422 Unprocessable Entity` response.
 
 ## Delete a Site
 
@@ -204,7 +204,7 @@ The API may also return:
 
 - `404 Not Found` when the requested site does not exist
 - `409 Conflict` when another site already uses the submitted `site_code`
-- `422 Unprocessable Content` when the request data fails validation
+- `422 Unprocessable Entity` when the request data fails validation
 
 ## Next Step
 

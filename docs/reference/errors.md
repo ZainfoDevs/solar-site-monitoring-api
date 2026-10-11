@@ -74,9 +74,9 @@ The API returns an error response similar to:
 
 Changing the site name won't resolve the conflict because the API requires each `site_code` to be unique. Use a different operational site code or work with the existing site record.
 
-## 422 Unprocessable Content
+## 422 Unprocessable Entity
 
-The API returns `422 Unprocessable Content` when the request contains data that fails validation.
+The API returns `422 Unprocessable Entity` when the request contains data that fails validation.
 
 This error can occur when a client:
 
@@ -105,7 +105,7 @@ The API returns a response similar to:
 ```json
 {
   "code": 422,
-  "status": "Unprocessable Content",
+  "status": "Unprocessable Entity",
   "errors": {
     "json": {
       "latitude": [
@@ -129,8 +129,7 @@ The API documents the expected `404`, `409`, and `422` responses separately wher
 ```json
 {
   "code": 500,
-  "status": "Internal Server Error",
-  "message": "An unexpected error occurred."
+  "status": "Internal Server Error"
 }
 ```
 
@@ -142,7 +141,7 @@ Clients should use the numeric value in `code` and the HTTP response status to d
 |---|---|---|
 | `404 Not Found` | The requested site does not exist | Retrieve, update, and delete operations |
 | `409 Conflict` | Another site already uses the submitted `site_code` | Create operation |
-| `422 Unprocessable Content` | The submitted request data failed validation | Create and update operations |
+| `422 Unprocessable Entity` | The submitted request data failed validation | Create and update operations |
 | `500 Internal Server Error` | The API encountered an unexpected problem | Any operation |
 
 ## View Errors in Swagger UI
