@@ -4,9 +4,9 @@
 
 The Solar Site Monitoring API is a Flask-based REST API for managing solar-powered mobile network base station sites.
 
-The project models a practical monitoring workflow in which teams record site information, solar-panel details, power readings, and operational alerts. It serves as a portfolio reference implementation for backend development and API documentation practices.
+The project models a practical monitoring workflow based on experience with solar installations in South Africa’s telecommunications sector. It demonstrates backend API development alongside OpenAPI documentation, automated testing, database migrations, and docs-as-code practices.
 
-> **Project status:** Early development. The application currently provides a documented health-check endpoint and an automated endpoint test.
+> **Project status:** Active development. The API currently supports health checks and the complete create, retrieve, update, and delete lifecycle for base station site records.
 
 ***
 
@@ -14,13 +14,15 @@ The project models a practical monitoring workflow in which teams record site in
 
 The API currently provides:
 
-* a Flask application factory
-* Flask-Smorest blueprint-based routing
-* a `GET /health` endpoint
-* generated OpenAPI documentation
-* Swagger UI
-* an automated health-endpoint test with pytest
-* continuous integration with GitHub Actions
+* a health-check endpoint
+* site creation, listing, retrieval, partial updates, and deletion
+* request validation and structured error responses
+* SQLite data storage through SQLAlchemy
+* database migrations through Alembic and Flask-Migrate
+* an OpenAPI specification and interactive Swagger UI
+* automated API and schema tests with pytest
+* continuous integration through GitHub Actions
+* task-based, conceptual, reference, development, and decision documentation
 
 ***
 
@@ -210,22 +212,18 @@ A successful test run confirms that the health endpoint returns `200 OK` and the
 
 ## Planned Development
 
-The project roadmap includes:
+The next development phases will focus on:
 
-* mobile network base station site management
-* solar-panel records
-* power-reading collection
+* solar-panel records and site associations
+* power-reading collection and validation
 * operational alerts
-* request validation
-* SQLAlchemy database models
-* database migrations with Alembic and Flask-Migrate
 * JWT authentication and authorization
 * expanded automated test coverage
 * Docker support
 * background tasks and email notifications
 * deployment
 
-Each capability will be added and documented as the API develops.
+Each capability will be implemented, tested, and documented as the API develops.
 
 ***
 
@@ -245,5 +243,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Author
 
-**Zamathuli Matseke**<br>
+**Zamathuli Matseke**
+
 ZainfoDevs
