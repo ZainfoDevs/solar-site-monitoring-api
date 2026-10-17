@@ -4,6 +4,7 @@ from app.extensions import api, db, migrate
 from app.models import Site
 from app.resources.health import blp as health_blp
 from app.resources.sites import blp as sites_blp
+from app.resources.solar_panels import blp as solar_panels_blp
 
 
 def create_app(test_config=None):
@@ -28,5 +29,6 @@ def create_app(test_config=None):
     api.init_app(app)
     api.register_blueprint(health_blp)
     api.register_blueprint(sites_blp)
+    api.register_blueprint(solar_panels_blp)
 
     return app
