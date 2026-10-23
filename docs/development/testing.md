@@ -13,7 +13,9 @@ tests/
 ├── conftest.py
 ├── test_health.py
 ├── test_site_schemas.py
-└── test_sites.py
+├── test_sites.py
+├── test_solar_panel_schemas.py
+└── test_solar_panels.py
 ```
 
 Each file has a specific purpose:
@@ -24,6 +26,8 @@ Each file has a specific purpose:
 | `test_health.py` | Checks the health endpoint |
 | `test_site_schemas.py` | Checks site validation and default values |
 | `test_sites.py` | Checks the site CRUD operations and their error responses |
+| `test_solar_panel_schemas.py` | Checks solar-panel validation and default values |
+| `test_solar_panels.py` | Checks solar-panel operations, relationships, and error responses |
 
 The test client sends requests to the Flask application without starting a development server or opening a network connection.
 
@@ -52,10 +56,10 @@ python -m pytest
 A successful run should end with output similar to:
 
 ```text
-12 passed in 0.36s
+25 passed
 ```
 
-The number of tests and completion time may change as the project develops.
+The number of tests may change as the project develops.
 
 You do not need to start the Flask development server before running the tests. The test client creates and uses the application directly.
 
@@ -134,15 +138,19 @@ The current test suite checks:
 - required site fields
 - default site status
 - coordinate validation
-- site creation
-- site listing
-- single-site retrieval
-- partial site updates
-- site deletion
+- site creation, listing, retrieval, partial updates, and deletion
 - duplicate site-code handling
 - missing-site responses
+- solar-panel validation and default status
+- positive solar-panel capacity
+- solar-panel creation, listing, retrieval, partial updates, and deletion
+- solar-panel relationships with sites
+- duplicate panel-code handling within a site
+- use of the same panel code at different sites
+- missing-site and missing-panel responses
+- prevention of site deletion while solar panels are still associated with it
 
-The project will add tests for solar panels, power readings, alerts, authentication, and other resources as those features are implemented.
+The project will add tests for power readings, alerts, authentication, and other resources as those features are implemented.
 
 ## Check a Change Before Committing
 
