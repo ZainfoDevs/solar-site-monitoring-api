@@ -10,7 +10,7 @@ Before you begin, make sure you have:
 - Python 3.14
 - access to a terminal
 
-The project uses SQLite for local development, so you don't need to install a separate database server.
+The project uses SQLite for local development, so you do not need to install a separate database server.
 
 ## Clone the Repository
 

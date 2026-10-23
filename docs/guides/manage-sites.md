@@ -126,6 +126,7 @@ If the specified site does not exist, the API returns a `404 Not Found` response
   "status": "Not Found"
 }
 ```
+
 ## Update a Site
 
 Send a `PATCH` request to update selected fields in an existing site record:
@@ -172,23 +173,29 @@ If the site does not exist, the API returns a `404 Not Found` response. If a sup
 
 > **Caution:** Deleting a site permanently removes its record from the current database.
 
+You cannot delete a site while solar panels are still associated with it. Delete the site’s solar-panel records before deleting the site.
+
+For instructions, see [Manage Solar Panels](manage-solar-panels.md).
+
 Send a `DELETE` request with the site’s generated `id`:
 
 ```bash
 curl -i -X DELETE http://127.0.0.1:5000/sites/1
 ```
 
-The API deletes the site and returns a `204 No Content` response. A successful response does not contain a response body.
+If the site does not contain any solar panels, the API deletes the site and returns a `204 No Content` response. A successful response does not contain a response body.
 
-You can confirm the deletion by requesting the same site again:
+If the site still contains solar panels, the API returns a `409 Conflict` response and does not delete the site:
 
-```bash
-curl -i http://127.0.0.1:5000/sites/1
+```json
+{
+  "code": 409,
+  "message": "Cannot delete a site that still has solar panels.",
+  "status": "Conflict"
+}
 ```
 
-Because the record no longer exists, the API returns a `404 Not Found` response.
-
-If the site does not exist when you send the `DELETE` request, the API also returns a `404 Not Found`.
+If the site does not exist when you send the `DELETE` request, the API returns a `404 Not Found` response.
 
 ## Response Summary
 
@@ -204,8 +211,9 @@ The API may also return:
 
 - `404 Not Found` when the requested site does not exist
 - `409 Conflict` when another site already uses the submitted `site_code`
+- `409 Conflict` when a client tries to delete a site that still contains solar panels
 - `422 Unprocessable Entity` when the request data fails validation
 
 ## Next Step
 
-Continue to [API Errors](../reference/errors.md) to learn how the API reports missing resources, duplicate site codes, and invalid request data.
+Continue to [API Errors](../reference/errors.md) to learn how the API reports missing resources, duplicate site codes, site-deletion conflicts, and invalid request data.

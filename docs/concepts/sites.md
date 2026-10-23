@@ -78,11 +78,21 @@ The current `PATCH /sites/{site_id}` operation can update:
 
 The operation does not change `site_code`. This keeps the operational identifier stable after the API creates the record.
 
+## Site and Solar Panel Relationship
+
+A site can contain multiple solar panels, while each solar panel belongs to one site.
+
+The `solar_panels.site_id` foreign key links each panel record to its site. This relationship keeps site and panel records separate while letting the application determine which panels belong to a particular site.
+
+The API does not allow a client to delete a site while solar panels are still associated with it. The client must delete those panel records before deleting the site.
+
+For more information about panel records and their relationship with sites, see [Solar Panels](solar-panels.md).
+
 ## Current Scope
 
-The current model stores information about the base station site itself. Future milestones will connect sites to solar panels, power readings, and operational alerts.
+The current data model includes base station sites and their solar-panel records.
 
-Those resources are part of the project roadmap and are not included in the current data model.
+Future milestones will add power readings and operational alerts.
 
 ## Next Step
 

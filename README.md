@@ -6,7 +6,7 @@ The Solar Site Monitoring API is a Flask-based REST API for managing solar-power
 
 The project models a practical monitoring workflow based on experience with solar installations in South Africa’s telecommunications sector. It demonstrates backend API development alongside OpenAPI documentation, automated testing, database migrations, and docs-as-code practices.
 
-> **Project status:** Active development. The API currently supports health checks and the complete create, retrieve, update, and delete lifecycle for base station site records.
+> **Project status:** Active development. The API currently supports health checks and full lifecycle management for base station sites and their solar-panel records.
 
 ***
 
@@ -16,6 +16,8 @@ The API currently provides:
 
 * a health-check endpoint
 * site creation, listing, retrieval, partial updates, and deletion
+* solar-panel creation, listing, retrieval, partial updates, and deletion
+* a one-to-many relationship between sites and solar panels
 * request validation and structured error responses
 * SQLite data storage through SQLAlchemy
 * database migrations through Alembic and Flask-Migrate
@@ -62,27 +64,31 @@ solar-site-monitoring-api/
 │   ├── resources/
 │   │   ├── __init__.py
 │   │   ├── health.py
-│   │   └── sites.py
+│   │   ├── sites.py
+│   │   └── solar_panels.py
 │   ├── __init__.py
 │   ├── extensions.py
 │   ├── models.py
 │   └── schemas.py
 ├── docs/
 │   ├── concepts/
-│   │   └── sites.md
+│   │   ├── sites.md
+│   │   └── solar-panels.md
 │   ├── decisions/
 │   │   └── 0001-use-flask-smorest.md
 │   ├── development/
 │   │   └── testing.md
 │   ├── guides/
-│   │   └── manage-sites.md
+│   │   ├── manage-sites.md
+│   │   └── manage-solar-panels.md
 │   ├── reference/
 │   │   └── errors.md
 │   ├── index.md
 │   └── quickstart.md
 ├── migrations/
 │   ├── versions/
-│   │   └── be46c1c6dc81_create_sites_table.py
+│   │   ├── be46c1c6dc81_create_sites_table.py
+│   │   └── 7ad193c2ab9f_create_solar_panels_table.py
 │   ├── README
 │   ├── alembic.ini
 │   ├── env.py
@@ -91,7 +97,9 @@ solar-site-monitoring-api/
 │   ├── conftest.py
 │   ├── test_health.py
 │   ├── test_site_schemas.py
-│   └── test_sites.py
+│   ├── test_sites.py
+│   ├── test_solar_panel_schemas.py
+│   └── test_solar_panels.py
 ├── .gitignore
 ├── LICENSE
 ├── README.md
@@ -99,7 +107,7 @@ solar-site-monitoring-api/
 └── requirements.txt
 ```
 
-The application factory in `app/__init__.py` configures the API and registers its resources. The `app` directory contains the database model, schemas, extensions, and endpoint implementations. The `tests` directory contains the automated test suite, while `docs` contains the project documentation. Alembic stores the database migration history in `migrations`.
+The application factory in `app/__init__.py` configures the API and registers its resources. The `app` directory contains the database models, schemas, extensions, and endpoint implementations. The `tests` directory contains the automated test suite, while `docs` contains the project documentation. Alembic stores the database migration history in the `migrations` directory.
 
 ***
 
@@ -206,7 +214,7 @@ Install the development dependencies, then run:
 python -m pytest
 ```
 
-A successful test run confirms that the health endpoint returns `200 OK` and the expected JSON response.
+A successful test run confirms that the health endpoint, site operations, solar-panel operations, and schema validation behave as expected.
 
 ***
 
@@ -214,10 +222,10 @@ A successful test run confirms that the health endpoint returns `200 OK` and the
 
 The next development phases will focus on:
 
-* solar-panel records and site associations
 * power-reading collection and validation
 * operational alerts
 * JWT authentication and authorization
+* environment-based configuration and secrets management
 * expanded automated test coverage
 * Docker support
 * background tasks and email notifications

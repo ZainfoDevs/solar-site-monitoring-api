@@ -19,13 +19,13 @@ Not every error response includes every field. For example, a `404 Not Found` re
 
 ## 404 Not Found
 
-The API returns `404 Not Found` when a client requests a site that does not exist.
+The API returns `404 Not Found` when a client requests a site that does not exist or a solar panel that does not exist at the specified site.
 
 This response can occur when a client tries to:
 
-- retrieve a site
-- update a site
-- delete a site
+- retrieve, update, or delete a site
+- list or create solar panels for a site that does not exist
+- retrieve, update, or delete a solar panel that does not exist at the specified site
 
 For example, the following request asks for site `999`:
 
@@ -42,27 +42,31 @@ If the database does not contain that site, the API returns:
 }
 ```
 
-Before retrying the request, confirm that the URL contains the correct site `id`. You can use `GET /sites` to view the available site records and their generated identifiers.
+When a requested solar panel does not exist at the specified site, the response may also include a message:
+
+```json
+{
+  "code": 404,
+  "message": "The requested solar panel was not found.",
+  "status": "Not Found"
+}
+```
+
+Before retrying the request, confirm that the URL contains the correct site and solar-panel identifiers.
 
 ## 409 Conflict
 
-The API returns `409 Conflict` when a client tries to create a site with a `site_code` that already belongs to another record.
+The API returns `409 Conflict` when a request conflicts with an existing resource or relationship.
 
-For example, if `PTA-CBD-001` already exists, the following request fails:
+A conflict can occur when a client:
 
-```bash
-curl -X POST \
-  http://127.0.0.1:5000/sites \
-  -H "Content-Type: application/json" \
-  -d '{
-    "site_code": "PTA-CBD-001",
-    "name": "Pretoria Central Backup",
-    "latitude": -25.7479,
-    "longitude": 28.2293
-  }'
-```
+- creates a site with a `site_code` that already belongs to another site
+- creates a solar panel with a `panel_code` that already exists at the same site
+- tries to delete a site that still contains solar panels
 
-The API returns an error response similar to:
+### Duplicate Site Code
+
+If `PTA-CBD-001` already exists, the API returns:
 
 ```json
 {
@@ -72,7 +76,37 @@ The API returns an error response similar to:
 }
 ```
 
-Changing the site name won't resolve the conflict because the API requires each `site_code` to be unique. Use a different operational site code or work with the existing site record.
+Each `site_code` must be unique. Use a different operational site code or work with the existing site record.
+
+### Duplicate Panel Code
+
+A `panel_code` must be unique within its site. If `SP-101` already exists at the specified site, the API returns:
+
+```json
+{
+  "code": 409,
+  "message": "A solar panel with this panel code already exists at the site.",
+  "status": "Conflict"
+}
+```
+
+You can use the same `panel_code` at a different site.
+
+### Site Contains Solar Panels
+
+You cannot delete a site while solar panels are still associated with it.
+
+The API returns:
+
+```json
+{
+  "code": 409,
+  "message": "Cannot delete a site that still has solar panels.",
+  "status": "Conflict"
+}
+```
+
+Delete the site's solar-panel records before deleting the site.
 
 ## 422 Unprocessable Entity
 
@@ -81,9 +115,10 @@ The API returns `422 Unprocessable Entity` when the request contains data that f
 This error can occur when a client:
 
 - omits a required field
-- submits an unsupported site status
+- submits an unsupported site or solar-panel status
 - provides a latitude outside the range `-90` to `90`
 - provides a longitude outside the range `-180` to `180`
+- submits a solar-panel capacity that is not greater than `0`
 - exceeds the allowed length of a text field
 
 For example, the following request contains an invalid latitude:
@@ -139,8 +174,8 @@ Clients should use the numeric value in `code` and the HTTP response status to d
 
 | Status | Meaning | Applies to |
 |---|---|---|
-| `404 Not Found` | The requested site does not exist | Retrieve, update, and delete operations |
-| `409 Conflict` | Another site already uses the submitted `site_code` | Create operation |
+| `404 Not Found` | The requested site or solar panel does not exist | Site and solar-panel operations |
+| `409 Conflict` | The request conflicts with an existing identifier or resource relationship | Site creation, solar-panel creation, and site deletion |
 | `422 Unprocessable Entity` | The submitted request data failed validation | Create and update operations |
 | `500 Internal Server Error` | The API encountered an unexpected problem | Any operation |
 
