@@ -142,10 +142,10 @@ class SiteDetail(MethodView):
         site = db.get_or_404(Site, site_id)
 
         if site.solar_panels:
-         abort(
-            409,
-            message="Cannot delete a site that still has solar panels.",
-        )
+            abort(
+                409,
+                message="Cannot delete a site that still has solar panels.",
+            )
 
         db.session.delete(site)
         db.session.commit()

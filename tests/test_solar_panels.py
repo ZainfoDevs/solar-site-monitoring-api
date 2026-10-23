@@ -190,6 +190,7 @@ def test_delete_solar_panel(client):
 
     assert get_response.status_code == 404
 
+
 def test_delete_site_rejected_when_site_has_solar_panels(client):
     site = create_site(client)
 
