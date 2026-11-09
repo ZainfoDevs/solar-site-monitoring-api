@@ -1,3 +1,6 @@
+from datetime import datetime, timedelta
+
+
 def site_payload():
     return {
         "site_code": "PTA-CBD-001",
@@ -21,6 +24,19 @@ def test_create_site(client):
     assert site["status"] == "operational"
     assert "created_at" in site
     assert "updated_at" in site
+
+
+def test_create_site_returns_utc_timestamps(client):
+    response = client.post("/sites", json=site_payload())
+
+    assert response.status_code == 201
+
+    site = response.get_json()
+    created_at = datetime.fromisoformat(site["created_at"])
+    updated_at = datetime.fromisoformat(site["updated_at"])
+
+    assert created_at.utcoffset() == timedelta(0)
+    assert updated_at.utcoffset() == timedelta(0)
 
 
 def test_list_sites(client):

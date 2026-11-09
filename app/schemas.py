@@ -54,11 +54,15 @@ class SiteSchema(SiteCreateSchema):
     )
     created_at = fields.DateTime(
         dump_only=True,
-        metadata={"description": "Date and time when the site was created."},
+        metadata={
+            "description": "Date and time in UTC when the site was created."
+        },
     )
     updated_at = fields.DateTime(
         dump_only=True,
-        metadata={"description": "Date and time when the site was last updated."},
+        metadata={
+            "description": "Date and time in UTC when the site was last updated."
+        },
     )
 
 
@@ -103,11 +107,11 @@ class SolarPanelSchema(SolarPanelCreateSchema):
     )
     created_at = fields.DateTime(
         dump_only=True,
-        metadata={"description": "Date and time when the panel was created."},
+        metadata={"description": "Date and time in UTC when the panel was created."},
     )
     updated_at = fields.DateTime(
         dump_only=True,
-        metadata={"description": "Date and time when the panel was last updated."},
+        metadata={"description": "Date and time in UTC when the panel was last updated."},
     )
 
 

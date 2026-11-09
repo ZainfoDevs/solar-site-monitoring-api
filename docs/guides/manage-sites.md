@@ -43,20 +43,20 @@ Example response:
 
 ```json
 {
-  "created_at": "2026-09-30T12:00:00.000000",
+  "created_at": "2026-09-30T12:00:00.000000+00:00",
   "id": 1,
   "latitude": -25.7479,
   "longitude": 28.2293,
   "name": "Pretoria Central",
   "site_code": "PTA-CBD-001",
   "status": "operational",
-  "updated_at": "2026-09-30T12:00:00.000000"
+  "updated_at": "2026-09-30T12:00:00.000000+00:00"
 }
 ```
 
 The API generates `id`, `created_at`, and `updated_at`. Because the request does not include `status`, the API assigns `operational`.
 
-Your generated ID and timestamps may differ from the example.
+Your generated ID and timestamp values may differ from the example. The `+00:00` offset identifies the timestamps as UTC.
 
 ## List the Sites
 
@@ -73,14 +73,14 @@ Example response:
 ```json
 [
   {
-    "created_at": "2026-09-30T12:00:00.000000",
+    "created_at": "2026-09-30T12:00:00.000000+00:00",
     "id": 1,
     "latitude": -25.7479,
     "longitude": 28.2293,
     "name": "Pretoria Central",
     "site_code": "PTA-CBD-001",
     "status": "operational",
-    "updated_at": "2026-09-30T12:00:00.000000"
+    "updated_at": "2026-09-30T12:00:00.000000+00:00"
   }
 ]
 ```
@@ -105,14 +105,14 @@ Example response:
 
 ```json
 {
-  "created_at": "2026-09-30T12:00:00.000000",
+  "created_at": "2026-09-30T12:00:00.000000+00:00",
   "id": 1,
   "latitude": -25.7479,
   "longitude": 28.2293,
   "name": "Pretoria Central",
   "site_code": "PTA-CBD-001",
   "status": "operational",
-  "updated_at": "2026-09-30T12:00:00.000000"
+  "updated_at": "2026-09-30T12:00:00.000000+00:00"
 }
 ```
 
@@ -147,14 +147,14 @@ Example response:
 
 ```json
 {
-  "created_at": "2026-09-30T12:00:00.000000",
+  "created_at": "2026-09-30T12:00:00.000000+00:00",
   "id": 1,
   "latitude": -25.7479,
   "longitude": 28.2293,
   "name": "Pretoria Central Rooftop",
   "site_code": "PTA-CBD-001",
   "status": "maintenance",
-  "updated_at": "2026-09-30T12:30:00.000000"
+  "updated_at": "2026-09-30T12:30:00.000000+00:00"
 }
 ```
 

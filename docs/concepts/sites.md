@@ -46,6 +46,8 @@ The current API does not retrieve sites by `site_code`. Clients receive the gene
 
 The API generates `id`, `created_at`, and `updated_at`. Clients do not provide these fields when creating a site.
 
+The API returns `created_at` and `updated_at` as ISO 8601 timestamps in UTC. The `+00:00` offset identifies UTC explicitly, so clients do not need to infer the timezone.
+
 ## Site Status
 
 A site can have one of the following status values:
