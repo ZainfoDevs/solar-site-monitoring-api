@@ -126,3 +126,40 @@ class SolarPanel(db.Model):
     site: Mapped[Site] = relationship(
         back_populates="solar_panels",
     )
+
+    power_readings: Mapped[list["PowerReading"]] = relationship(
+        back_populates="solar_panel",
+    )
+
+
+class PowerReading(db.Model):
+    __tablename__ = "power_readings"
+    __table_args__ = (
+        CheckConstraint(
+            "output_watts >= 0",
+            name="ck_power_readings_output_non_negative",
+        ),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+
+    solar_panel_id: Mapped[int] = mapped_column(
+        ForeignKey("solar_panels.id"),
+        index=True,
+        nullable=False,
+    )
+
+    output_watts: Mapped[float] = mapped_column(
+        Float,
+        nullable=False,
+    )
+
+    recorded_at: Mapped[datetime] = mapped_column(
+        UTCDateTime(),
+        default=lambda: datetime.now(timezone.utc),
+        nullable=False,
+    )
+
+    solar_panel: Mapped[SolarPanel] = relationship(
+        back_populates="power_readings",
+    )
