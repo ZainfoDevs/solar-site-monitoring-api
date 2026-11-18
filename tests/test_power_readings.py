@@ -137,3 +137,89 @@ def test_reject_reading_for_panel_belonging_to_another_site(client):
     )
 
     assert response.status_code == 404
+
+
+def test_list_power_readings_empty(client):
+    site_response = client.post(
+        "/sites",
+        json={
+            "site_code": "PTA-CBD-001",
+            "name": "Pretoria Central",
+            "latitude": -25.7479,
+            "longitude": 28.2293,
+        },
+    )
+
+    assert site_response.status_code == 201
+    site_id = site_response.get_json()["id"]
+
+    panel_response = client.post(
+        f"/sites/{site_id}/panels",
+        json={
+            "panel_code": "SP-101",
+            "capacity_watts": 550.0,
+        },
+    )
+
+    assert panel_response.status_code == 201
+    panel_id = panel_response.get_json()["id"]
+
+    response = client.get(
+        f"/sites/{site_id}/panels/{panel_id}/readings"
+    )
+
+    assert response.status_code == 200
+    assert response.get_json() == []
+
+
+def test_list_power_readings(client):
+    site_response = client.post(
+        "/sites",
+        json={
+            "site_code": "PTA-CBD-001",
+            "name": "Pretoria Central",
+            "latitude": -25.7479,
+            "longitude": 28.2293,
+        },
+    )
+
+    assert site_response.status_code == 201
+    site_id = site_response.get_json()["id"]
+
+    panel_response = client.post(
+        f"/sites/{site_id}/panels",
+        json={
+            "panel_code": "SP-101",
+            "capacity_watts": 550.0,
+        },
+    )
+
+    assert panel_response.status_code == 201
+    panel_id = panel_response.get_json()["id"]
+
+    first_reading_response = client.post(
+        f"/sites/{site_id}/panels/{panel_id}/readings",
+        json={"output_watts": 350.0},
+    )
+
+    assert first_reading_response.status_code == 201
+
+    second_reading_response = client.post(
+        f"/sites/{site_id}/panels/{panel_id}/readings",
+        json={"output_watts": 425.0},
+    )
+
+    assert second_reading_response.status_code == 201
+
+    response = client.get(
+        f"/sites/{site_id}/panels/{panel_id}/readings"
+    )
+
+    assert response.status_code == 200
+    readings = response.get_json()
+
+    assert isinstance(readings, list)
+    assert len(readings) == 2
+
+    assert readings[0]["output_watts"] == 350.0
+    assert readings[1]["output_watts"] == 425.0
